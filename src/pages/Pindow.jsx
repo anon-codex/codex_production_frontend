@@ -3,7 +3,6 @@ import "./instadown.css";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 
-
 function Pindow() {
   const [url, setUrl] = useState("");
   const [videoData, setVideoData] = useState(null);
@@ -183,6 +182,8 @@ function Pindow() {
                 controls
                 className="video-player"
                 poster="https://via.placeholder.com/600x800?text=Pinterest+Video"
+                autoPlay
+                muted
                 // autoPlay
               >
                 <source src={videoData?.url} type="video/mp4" />

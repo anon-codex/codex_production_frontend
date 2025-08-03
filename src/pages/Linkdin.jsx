@@ -3,8 +3,6 @@ import "./instadown.css";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 
-
-
 function Linkdow() {
   const [url, setUrl] = useState("");
   const [videoData, setVideoData] = useState(null);
@@ -42,21 +40,23 @@ function Linkdow() {
     setError("");
     setVideoData(null);
 
-  const ur = apiUrl;
+    const ur = apiUrl;
 
-  const video_url = url;
+    const video_url = url;
 
-  try {
-    const response = await axios.post(`${ur}/linkedin`,{video_url}, {
-      headers: {
+    try {
+      const response = await axios.post(
+        `${ur}/linkedin`,
+        { video_url },
+        {
+          headers: {
             "Content-Type": "application/json",
           },
-    });
+        }
+      );
 
       console.log("data ", response.data.data.url);
-      if (
-        response.data && response.data.data.url
-      ) {
+      if (response.data && response.data.data.url) {
         setVideoData(response.data.data);
       } else {
         setError("⚠️ No video data found. Please check the link.");
@@ -85,52 +85,51 @@ function Linkdow() {
   };
 
   const handleDownload = async () => {
-  const url = videoData?.url;
-  if (!url) return alert("Download link not found");
+    const url = videoData?.url;
+    if (!url) return alert("Download link not found");
 
-  setDownloading(true);
+    setDownloading(true);
 
-  try {
-    const response = await fetch(url);
-    const blob = await response.blob();
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
 
-    // Create temporary blob link
-    const blobUrl = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = blobUrl;
-    a.download = `${Date.now()}_linkedin.mp4`; // Set filename
-    document.body.appendChild(a);
-    a.click();
+      // Create temporary blob link
+      const blobUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = `${Date.now()}_linkedin.mp4`; // Set filename
+      document.body.appendChild(a);
+      a.click();
 
-    // Clean up
-    a.remove();
-    window.URL.revokeObjectURL(blobUrl);
-  } catch (err) {
-    console.error("Download failed:", err.message);
-    alert("Download failed. Please try again.");
-  } finally {
-    setDownloading(false);
-  }
-};
+      // Clean up
+      a.remove();
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      console.error("Download failed:", err.message);
+      alert("Download failed. Please try again.");
+    } finally {
+      setDownloading(false);
+    }
+  };
 
-
-//   const handleDownload = () => {
-//     setDownloading(true);
-//     try {
-//       const url = videoData.url;
-//       const a = document.createElement("a");
-//       a.href = url;
-//       document.body.appendChild(a);
-//       a.click();
-//       a.remove();
-//       window.URL.revokeObjectURL(url);
-//     } catch (err) {
-//       console.error("Download failed:", err.message);
-//       alert("Download failed. Please check the link.");
-//     } finally {
-//       setDownloading(false);
-//     }
-//   };
+  //   const handleDownload = () => {
+  //     setDownloading(true);
+  //     try {
+  //       const url = videoData.url;
+  //       const a = document.createElement("a");
+  //       a.href = url;
+  //       document.body.appendChild(a);
+  //       a.click();
+  //       a.remove();
+  //       window.URL.revokeObjectURL(url);
+  //     } catch (err) {
+  //       console.error("Download failed:", err.message);
+  //       alert("Download failed. Please check the link.");
+  //     } finally {
+  //       setDownloading(false);
+  //     }
+  //   };
 
   return (
     <div className="app-container">
@@ -193,6 +192,8 @@ function Linkdow() {
                 controls
                 className="video-player"
                 poster="https://via.placeholder.com/400x600?text=LinkedIn+Video"
+                autoPlay
+                muted
               >
                 <source src={videoData.url} type="video/mp4" />
                 Your browser does not support the video tag.

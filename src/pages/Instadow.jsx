@@ -178,6 +178,8 @@ function Instadow() {
                 controls 
                 className="video-player"
                 poster="https://via.placeholder.com/600x800?text=Instagram+Reel"
+                autoPlay
+                muted
               
               >
                 <source src={videoData?.data?.[0]?.url} type="video/mp4" />
