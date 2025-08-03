@@ -7,7 +7,7 @@ const About = () => {
       <h1 className="about-title">About Us</h1>
 
       <p>
-        Welcome to <strong>InstaTube Downloader</strong> – your one-stop solution to easily save and enjoy public videos from platforms like <strong>YouTube</strong> and <strong>Instagram</strong>.
+        Welcome to <strong>Grabshort</strong> – your one-stop solution to easily save and enjoy public videos from platforms like <strong>Instagram</strong>,<strong>Linkedin </strong>and <strong>Pinterest</strong>.
       </p>
 
       <h2>🌐 What We Do</h2>
