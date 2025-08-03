@@ -35,7 +35,7 @@ const About = () => {
       </p>
 
       <p className="disclaimer">
-        Disclaimer: This website is not affiliated with YouTube, Instagram, or any of their subsidiaries.
+        Disclaimer: This website is not affiliated with Instagram, LinkedIn, Pinterest, or any of their parent companies. All trademarks and copyrights belong to their respective owners. This tool is intended for educational and personal use only. Downloading content without permission may violate the platform's terms of service.
       </p>
     </div>
   );

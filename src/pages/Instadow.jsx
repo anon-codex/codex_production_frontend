@@ -154,8 +154,8 @@ function Instadow() {
               {isLoading ? 'Searching...' : 'Search'}
             </button>
 
-            <span style={{color:"red"}}>{error}</span>
           </div>
+            <span style={{color:"red"}}>{error}</span>
         </div>
 
         {/* Fetching Animation */}
