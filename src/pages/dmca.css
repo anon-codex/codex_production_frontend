@@ -1,0 +1,83 @@
+.dmca-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+.dmca-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.dmca-subtitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+/* Text & Lists */
+.dmca-container p {
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.dmca-container ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding-left: 1rem;
+}
+
+.dmca-container li {
+  margin-bottom: 10px;
+}
+
+/* Footer Date */
+.dmca-updated {
+  font-size: 14px;
+  color: gray;
+  margin-top: 30px;
+}
+
+/* ✅ Responsive styles */
+@media screen and (max-width: 768px) {
+  .dmca-container {
+    margin: 20px;
+    padding: 16px;
+  }
+
+  .dmca-title {
+    font-size: 1.6rem;
+  }
+
+  .dmca-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .dmca-container {
+    padding: 12px;
+  }
+
+  .dmca-title {
+    font-size: 1.4rem;
+  }
+
+  .dmca-subtitle {
+    font-size: 1rem;
+  }
+
+  .dmca-updated {
+    font-size: 12px;
+  }
+}
