@@ -1,117 +1,116 @@
-import React, { useState } from 'react';
-import './instadown.css';
-import axios from 'axios';
+import React, { useState } from "react";
+import "./instadown.css";
+import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 
-
 function Instadow() {
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
   const [videoData, setVideoData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [downloading, setDownloading] = useState(false);
 
-  
   function validateSafeURL(url) {
-  if (!url || typeof url !== 'string') return false;
- 
+    if (!url || typeof url !== "string") return false;
 
-  const trimmed = url.trim().toLowerCase();
+    const trimmed = url.trim().toLowerCase();
 
-  // ❌ Block if contains XSS payloads or dangerous schemes
-  const blackList = ['<', '>', 'javascript:', 'data:', 'onerror=', 'onload='];
-  for (const bad of blackList) {
-    if (trimmed.includes(bad)) return false;
+    // ❌ Block if contains XSS payloads or dangerous schemes
+    const blackList = ["<", ">", "javascript:", "data:", "onerror=", "onload="];
+    for (const bad of blackList) {
+      if (trimmed.includes(bad)) return false;
+    }
+
+    // ✅ Allow only trusted video domains
+    const allowedPattern =
+      /^(https?:\/\/)(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/|instagram\.com\/reel\/|linkedin\.com\/)/i;
+    if (!allowedPattern.test(trimmed)) return false;
+
+    // ✅ Use DOM anchor element for safe parsing
+    const parser = document.createElement("a");
+    parser.href = trimmed;
+
+    // ✅ Only allow http(s)
+    if (!["http:", "https:"].includes(parser.protocol)) return false;
+
+    return true;
   }
-
-  // ✅ Allow only trusted video domains
-  const allowedPattern = /^(https?:\/\/)(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/|instagram\.com\/reel\/|linkedin\.com\/)/i;
-  if (!allowedPattern.test(trimmed)) return false;
-
-  // ✅ Use DOM anchor element for safe parsing
-  const parser = document.createElement('a');
-  parser.href = trimmed;
-
-  // ✅ Only allow http(s)
-  if (!['http:', 'https:'].includes(parser.protocol)) return false;
-
-  return true;
-}
-
 
   const handleSearch = async () => {
-     if (!url || !validateSafeURL(url)) {
-    setError("❌ Please enter a valid Instagram URL.");
-    return;
-  }
+    if (!url || !validateSafeURL(url)) {
+      setError("❌ Please enter a valid Instagram URL.");
+      return;
+    }
 
-  setLoading(true);
-  setError("");
-  setVideoData(null);
+    setLoading(true);
+    setError("");
+    setVideoData(null);
 
-  const ur = apiUrl;
+    const ur = apiUrl;
 
-  const video_url = url;
+    const video_url = url;
 
-  try {
-    const response = await axios.post(`${ur}/insta`,{video_url}, {
-      headers: {
+    try {
+      const response = await axios.post(
+        `${ur}/insta`,
+        { video_url },
+        {
+          headers: {
             "Content-Type": "application/json",
           },
-    });
+        }
+      );
 
-    console.log("data ",response.data);
-    // Check if API returned data properly
-    if (
-      response.data &&
-      response.data.data &&
-      Array.isArray(response.data.data) &&
-      response.data.data.length > 0
-    ) {
-      setVideoData(response.data);
-    } else {
-      setError("⚠️ No video data found. Please check the link.");
-    }
-  } catch (err) {
-    console.error("Error occurred while fetching video:", err);
-
-    // Smart error detection
-    if (err.response) {
-      if (err.response.status === 429) {
-        setError("🚫 Too many requests. Please wait and try again later.");
-      } else if (err.response.status === 403 || err.response.status === 401) {
-        setError("🔐 Invalid API key or unauthorized access.");
-      } else if (err.response.data && err.response.data.message) {
-        setError(`❌ ${err.response.data.message}`);
+      // Check if API returned data properly
+      if (
+        response.data &&
+        response.data.data &&
+        Array.isArray(response.data.data) &&
+        response.data.data.length > 0
+      ) {
+        setVideoData(response.data);
       } else {
-        setError("❌ Server error occurred. Please try again.");
+        setError("⚠️ No video data found. Please check the link.");
       }
-    } else if (err.request) {
-      setError("⚠️ No response from server. Check your internet connection.");
-    } else {
-      setError("⚠️ Something went wrong. Try again later.");
+    } catch (err) {
+      console.error("Error occurred while fetching video:", err);
+
+      // Smart error detection
+      if (err.response) {
+        if (err.response.status === 429) {
+          setError("🚫 Too many requests. Please wait and try again later.");
+        } else if (err.response.status === 403 || err.response.status === 401) {
+          setError("🔐 Invalid API key or unauthorized access.");
+        } else if (err.response.data && err.response.data.message) {
+          setError(`❌ ${err.response.data.message}`);
+        } else {
+          setError("❌ Server error occurred. Please try again.");
+        }
+      } else if (err.request) {
+        setError("⚠️ No response from server. Check your internet connection.");
+      } else {
+        setError("⚠️ Something went wrong. Try again later.");
+      }
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false);
-  }
   };
 
   const handleDownload = () => {
-     // if (!videoData?.download_link) return;
+    // if (!videoData?.download_link) return;
     // const title = videoData.title;
     setDownloading(true);
-      try {
-      
-        const url = videoData?.data?.[0]?.url;
+    try {
+      const url = videoData?.data?.[0]?.url;
 
-        const a = document.createElement("a");
-        a.href = url;
-        // a.download = `${title}-video.mp4`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-      } catch (err) {
+      const a = document.createElement("a");
+      a.href = url;
+      // a.download = `${title}-video.mp4`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
       console.error("Download failed:", err.message);
       alert("Download failed. Please check the link.");
     } finally {
@@ -143,19 +142,18 @@ function Instadow() {
           <h1>Instagram Reels Downloader</h1>
           <p>Save your favorite Instagram Reels in high quality</p>
           <div className="search-container">
-            <input 
-              type="text" 
-              placeholder="Paste Instagram Reel URL here..." 
+            <input
+              type="text"
+              placeholder="Paste Instagram Reel URL here..."
               value={url}
               onChange={(e) => setUrl(e.target.value)}
             />
-            
-            <button onClick={handleSearch} disabled={isLoading}>
-              {isLoading ? 'Searching...' : 'Search'}
-            </button>
 
+            <button onClick={handleSearch} disabled={isLoading}>
+              {isLoading ? "Searching..." : "Search"}
+            </button>
           </div>
-            <span style={{color:"red"}}>{error}</span>
+          <span style={{ color: "red" }}>{error}</span>
         </div>
 
         {/* Fetching Animation */}
@@ -174,17 +172,24 @@ function Instadow() {
         {videoData && !isLoading && (
           <div className="video-preview-section">
             <div className="video-container">
-              <video 
-                controls 
-                className="video-player"
-                poster="https://via.placeholder.com/600x800?text=Instagram+Reel"
+              <video
+                controls
                 autoPlay
                 muted
-              
+                style={{
+                  width: "90%",
+                  maxWidth: "640px",
+                  aspectRatio: "9 / 16",
+                  borderRadius: "12px",
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
+                  margin: "0 auto",
+                  display: "block",
+                }}
               >
                 <source src={videoData?.data?.[0]?.url} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
+
               <button className="download-btn" onClick={handleDownload}>
                 Download Reel
               </button>
@@ -216,14 +221,20 @@ function Instadow() {
               <div className="step-number">1</div>
               <div className="step-content">
                 <h3>Find Reel URL</h3>
-                <p>Open Instagram, tap the share button on the reel, and select "Copy Link"</p>
+                <p>
+                  Open Instagram, tap the share button on the reel, and select
+                  "Copy Link"
+                </p>
               </div>
             </div>
             <div className="step-card">
               <div className="step-number">2</div>
               <div className="step-content">
                 <h3>Paste URL</h3>
-                <p>Paste the copied link into the search bar above and click "Search"</p>
+                <p>
+                  Paste the copied link into the search bar above and click
+                  "Search"
+                </p>
               </div>
             </div>
             <div className="step-card">

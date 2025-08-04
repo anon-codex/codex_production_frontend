@@ -191,9 +191,17 @@ function Linkdow() {
               <video
                 controls
                 className="video-player"
-                poster="https://via.placeholder.com/400x600?text=LinkedIn+Video"
                 autoPlay
                 muted
+                 style={{
+                  width: "90%",
+                  maxWidth: "640px",
+                  aspectRatio: "9 / 16",
+                  borderRadius: "12px",
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
+                  margin: "0 auto",
+                  display: "block",
+                }}
               >
                 <source src={videoData.url} type="video/mp4" />
                 Your browser does not support the video tag.

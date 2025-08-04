@@ -56,7 +56,6 @@ function Pindow() {
         }
       );
 
-      console.log("data ", response.data);
       if (response.data && response.data.data) {
         setVideoData(response.data.data);
       } else {
@@ -181,9 +180,17 @@ function Pindow() {
               <video
                 controls
                 className="video-player"
-                poster="https://via.placeholder.com/600x800?text=Pinterest+Video"
                 autoPlay
                 muted
+                 style={{
+                  width: "90%",
+                  maxWidth: "640px",
+                  aspectRatio: "9 / 16",
+                  borderRadius: "12px",
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
+                  margin: "0 auto",
+                  display: "block",
+                }}
                 // autoPlay
               >
                 <source src={videoData?.url} type="video/mp4" />
