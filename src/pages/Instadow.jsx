@@ -61,7 +61,7 @@ function Instadow() {
         }
       );
 
-      // Check if API returned data properly
+      
       if (
         response.data &&
         response.data.data &&
@@ -97,15 +97,14 @@ function Instadow() {
   };
 
   const handleDownload = () => {
-    // if (!videoData?.download_link) return;
-    // const title = videoData.title;
+  
     setDownloading(true);
     try {
       const url = videoData?.data?.[0]?.url;
 
       const a = document.createElement("a");
       a.href = url;
-      // a.download = `${title}-video.mp4`;
+     
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -120,20 +119,7 @@ function Instadow() {
 
   return (
     <div className="app-container">
-      {/* Top Navbar */}
-      {/* <nav className="navbar">
-        <div className="nav-brand">
-          <div className="logo">
-            <img style={{width:"130px", height:"35px"}} src={logo} alt="" />      
-          </div>
-        </div>
-        
-        <div className="nav-links">
-         <Link className="nav-link active" to="/">Instagram</Link>
-          <Link className="nav-link" to="/linkedow">LinkedIn</Link>  
-          <Link className="nav-link" to="/pindow">Pinterest</Link>  
-        </div>
-      </nav> */}
+    
 
       {/* Main Content */}
       <main className="main-content">
@@ -244,21 +230,9 @@ function Instadow() {
                 <p>Click the download button to save the reel to your device</p>
               </div>
             </div>
-            {/* <div className="step-card">
-              <div className="step-number">4</div>
-              <div className="step-content">
-                <h3>Enjoy Offline</h3>
-                <p>Access your downloaded reels anytime without internet connection</p>
-              </div>
-            </div> */}
           </div>
         </div>
       </main>
-
-      {/* Footer Section */}
-      {/* <footer className="footer">
-        <p>© 2025 InstaDownloader. All rights reserved.</p>
-      </footer> */}
     </div>
   );
 }

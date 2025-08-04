@@ -113,37 +113,11 @@ function Pindow() {
     }
   };
 
-  //   const handleDownload = () => {
-  //     setDownloading(true);
-  //     try {
-  //       const url = videoData?.data?.[0]?.url;
-  //       const a = document.createElement("a");
-  //       a.href = url;
-  //       document.body.appendChild(a);
-  //       a.click();
-  //       a.remove();
-  //       window.URL.revokeObjectURL(url);
-  //     } catch (err) {
-  //       console.error("Download failed:", err.message);
-  //       alert("Download failed. Please check the link.");
-  //     } finally {
-  //       setDownloading(false);
-  //     }
-  //   };
+  
 
   return (
     <div className="app-container">
-      {/* <nav className="navbar">
-        <div className="nav-brand">
-          <div className="logo"> <img style={{width:"130px", height:"35px"}} src={logo} alt="" /> </div>
-        </div>
-
-        <div className="nav-links">
-          <Link className="nav-link" to="/">Instagram</Link>
-          <Link className="nav-link" to="/linkedow">LinkedIn</Link>  
-          <Link className="nav-link active" to="/pindow">Pinterest</Link>  
-        </div>
-      </nav> */}
+      
 
       <main className="main-content">
         <div className="input-section">
@@ -254,9 +228,6 @@ function Pindow() {
         </div>
       </main>
 
-      {/* <footer className="footer">
-        <p>© 2025 PinterestDownloader. All rights reserved.</p>
-      </footer> */}
     </div>
   );
 }
