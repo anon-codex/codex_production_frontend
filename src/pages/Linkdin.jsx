@@ -86,8 +86,9 @@ function Linkdow() {
 
   const handleDownload = async () => {
     const url = videoData?.url;
-    if (!url) return alert("Download link not found");
-
+    if (!url) return setError("Download link not found");
+      
+    
     setDownloading(true);
 
     try {
@@ -107,7 +108,7 @@ function Linkdow() {
       window.URL.revokeObjectURL(blobUrl);
     } catch (err) {
       console.error("Download failed:", err.message);
-      alert("Download failed. Please try again.");
+      setError("⚠️ Download failed. Please try again.");
     } finally {
       setDownloading(false);
     }

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "./instadown.css";
+import "./insta_profile.css";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 import Insta_fun from "./Insta_fun";
 
-function Instadow() {
+function Insta_profile() {
   const [url, setUrl] = useState("");
   const [videoData, setVideoData] = useState(null);
   const [isLoading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ function Instadow() {
 
     // ✅ Allow only trusted video domains
     const allowedPattern =
-      /^(https?:\/\/)(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/|instagram\.com\/reel\/|linkedin\.com\/)/i;
+      /^(https?:\/\/)?(www\.)?instagram\.com\/([a-zA-Z0-9_.]+)(\/)?(\?.*)?$/i;
     if (!allowedPattern.test(trimmed)) return false;
 
     // ✅ Use DOM anchor element for safe parsing
@@ -36,9 +36,9 @@ function Instadow() {
 
     return true;
   }
-
+// || !validateSafeURL(url)
   const handleSearch = async () => {
-    if (!url || !validateSafeURL(url)) {
+    if (!url) {
       setError("❌ Please enter a valid Instagram URL.");
       return;
     }
@@ -53,7 +53,7 @@ function Instadow() {
 
     try {
       const response = await axios.post(
-        `${ur}/insta`,
+        `${ur}/insta_profile_api`,
         { video_url },
         {
           headers: {
@@ -62,19 +62,13 @@ function Instadow() {
         }
       );
 
-      
-      if (
-        response.data &&
-        response.data.data &&
-        Array.isArray(response.data.data) &&
-        response.data.data.length > 0
-      ) {
+      if (response.data && response.data.data) {
         setVideoData(response.data);
       } else {
-        setError("⚠️ No video data found. Please check the link.");
+        setError("⚠️ No Profile data found. Please check the link.");
       }
     } catch (err) {
-      console.error("Error occurred while fetching video:", err);
+      console.error("Error occurred while fetching Profile:", err);
 
       // Smart error detection
       if (err.response) {
@@ -98,44 +92,46 @@ function Instadow() {
   };
 
   const handleDownload = () => {
-  
-    setDownloading(true);
-    try {
-      const url = videoData?.data?.[0]?.url;
+  setDownloading(true);
+  try {
+    const imageUrl = videoData.data; // direct image URL from backend
+    const a = document.createElement("a");
+    a.href = imageUrl;
 
-      const a = document.createElement("a");
-      a.href = url;
-     
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("Download failed:", err.message);
-      setError("⚠️ Download failed. Please check the link.");
-    } finally {
-      setDownloading(false);
-    }
-  };
+    // IMPORTANT: download only works if file is from same-origin
+    const filename = imageUrl.split("/").pop() || "download.jpg";
+    a.setAttribute("download", filename);
+
+    // Trick to force download in all browsers
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } catch (err) {
+    console.error("Image download failed:", err.message);
+    // alert("Image download failed. Please try again.");
+    setError("⚠️ Image download failed. Please try again.");
+  } finally {
+    setDownloading(false);
+  }
+};
+
+
 
   return (
     <div className="app-container">
-    
-
       {/* Main Content */}
       <main className="main-content">
-        
-          <Insta_fun />
-
+        <Insta_fun />
 
         {/* URL Input Section */}
         <div className="input-section">
-          <h1>Instagram Reels Downloader</h1>
-          <p>Save your favorite Instagram Reels in high quality</p>
+          <h1>Instagram Profile Downloader</h1>
+          <p>Save your favorite Instagram Profile in best quality</p>
           <div className="search-container">
             <input
               type="text"
-              placeholder="Paste Instagram Reel URL here..."
+              placeholder="Paste Instagram Profile URL here..."
               value={url}
               onChange={(e) => setUrl(e.target.value)}
             />
@@ -155,7 +151,7 @@ function Instadow() {
               <div className="dot"></div>
               <div className="dot"></div>
             </div>
-            <p>Fetching your reel...</p>
+            <p>Fetching your profile...</p>
           </div>
         )}
 
@@ -163,26 +159,14 @@ function Instadow() {
         {videoData && !isLoading && (
           <div className="video-preview-section">
             <div className="video-container">
-              <video
-                controls
-                autoPlay
-                muted
-                style={{
-                  width: "90%",
-                  maxWidth: "640px",
-                  aspectRatio: "9 / 16",
-                  borderRadius: "12px",
-                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
-                  margin: "0 auto",
-                  display: "block",
-                }}
-              >
-                <source src={videoData?.data?.[0]?.url} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <img
+                src={videoData.data}
+
+                alt="Instagram profile"
+              />
 
               <button className="download-btn" onClick={handleDownload}>
-                Download Reel
+                Download Profile
               </button>
             </div>
           </div>
@@ -242,4 +226,4 @@ function Instadow() {
   );
 }
 
-export default Instadow;
+export default Insta_profile;
