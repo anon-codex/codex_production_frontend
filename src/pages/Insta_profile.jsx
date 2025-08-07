@@ -195,10 +195,9 @@ function Insta_profile() {
             <div className="step-card">
               <div className="step-number">1</div>
               <div className="step-content">
-                <h3>Find Reel URL</h3>
+                <h3>Find Profile URL</h3>
                 <p>
-                  Open Instagram, tap the share button on the reel, and select
-                  "Copy Link"
+                 Open Instagram, go to the profile you want, tap the three dots on the top-right, and select "Copy Profile URL" to copy the profile link.
                 </p>
               </div>
             </div>
@@ -216,7 +215,7 @@ function Insta_profile() {
               <div className="step-number">3</div>
               <div className="step-content">
                 <h3>Download & Save</h3>
-                <p>Click the download button to save the reel to your device</p>
+                <p>Click the download button to save the profile to your device</p>
               </div>
             </div>
           </div>
