@@ -9,7 +9,7 @@ import About from './pages/About'
 import TermsOfService from './pages/TermsOfService'
 import Contact from './pages/Contact'
 import Navbar from './components/Navbar'
-import Insta_profile from './pages/Insta_profile'
+// import Insta_profile from './pages/Insta_profile'
 import Insta_story from './pages/Insta_story'
 import Insta_highlights from './pages/Insta_highlights'
 import { Routes,Route } from 'react-router-dom'
@@ -29,7 +29,7 @@ const App = () => {
 	  <Route path='/privacy-policy' element={<PrivacyPolicy />}  />
 	  <Route path='/terms-of-service' element={<TermsOfService />}  />
 	  <Route path='/contact' element={<Contact />}  />
-	  <Route path='/insta_profile' element={<Insta_profile />}  />
+	  {/* <Route path='/insta_profile' element={<Insta_profile />}  /> */}
 	  <Route path='/insta_story' element={<Insta_story />}  />
 	  <Route path='/insta_highlights' element={<Insta_highlights />}  />
       

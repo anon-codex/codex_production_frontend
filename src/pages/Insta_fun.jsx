@@ -20,7 +20,7 @@ const Insta_fun = () => {
             </div>
         </NavLink>
     
-     <NavLink
+     {/* <NavLink
           to="/insta_profile"
           className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
           end
@@ -28,7 +28,7 @@ const Insta_fun = () => {
              <div className='my-flex insta-fun'>
                <span style={{marginTop:"5px"}}><CgProfile /> </span> <span>Dp<sup>Beta</sup></span>
             </div>
-    </NavLink>
+    </NavLink> */}
 
           <NavLink
           to="/insta_story"
