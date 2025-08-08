@@ -75,23 +75,53 @@ function Insta_story() {
     }
   };
 
+  // const handleDownload = (url) => {
+  //   setDownloading(true);
+  //   try {
+  //     const a = document.createElement("a");
+  //     a.href = url;
+  //     a.download = "highlight.mp4";
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     a.remove();
+  //     window.URL.revokeObjectURL(url);
+  //   } catch (err) {
+  //     console.error("Download failed:", err.message);
+  //     alert("Download failed. Please check the link.");
+  //   } finally {
+  //     setDownloading(false);
+  //   }
+  // };
+
   const handleDownload = (url) => {
-    setDownloading(true);
-    try {
+  setDownloading(true);
+
+  try {
+    // 👇 Open Adsterra ad in a new window/tab
+    const adWindow = window.open("https://www.profitableratecpm.com/b9nc2pwp?key=95fee1e76c98e0993218d26f48f4e33f", "_blank");
+
+    // 👇 Wait 2 seconds then download video
+    setTimeout(() => {
       const a = document.createElement("a");
       a.href = url;
-      a.download = "highlight.mp4";
+      a.download = "highlight.mp4"; // or "story.mp4" as per your file
       document.body.appendChild(a);
       a.click();
       a.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("Download failed:", err.message);
-      alert("Download failed. Please check the link.");
-    } finally {
+
+      // Optional: Revoke URL if it's a blob (not needed for direct links)
+      // window.URL.revokeObjectURL(url);
+
       setDownloading(false);
-    }
-  };
+    }, 2000); // delay in milliseconds
+
+  } catch (err) {
+    console.error("Download failed:", err.message);
+    alert("Download failed. Please check the link.");
+    setDownloading(false);
+  }
+};
+
 
   return (
     <div className="app-container">

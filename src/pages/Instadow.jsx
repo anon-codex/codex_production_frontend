@@ -98,26 +98,57 @@ function Instadow() {
     }
   };
 
-  const handleDownload = () => {
+  // const handleDownload = () => {
   
-    setDownloading(true);
-    try {
-      const url = videoData?.data?.[0]?.url;
+  //   setDownloading(true);
+  //   try {
+  //     const url = videoData?.data?.[0]?.url;
 
-      const a = document.createElement("a");
-      a.href = url;
+  //     const a = document.createElement("a");
+  //     a.href = url;
      
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("Download failed:", err.message);
-      setError("⚠️ Download failed. Please check the link.");
-    } finally {
-      setDownloading(false);
-    }
-  };
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     a.remove();
+  //     window.URL.revokeObjectURL(url);
+  //   } catch (err) {
+  //     console.error("Download failed:", err.message);
+  //     setError("⚠️ Download failed. Please check the link.");
+  //   } finally {
+  //     setDownloading(false);
+  //   }
+  // };
+
+  const handleDownload = () => {
+  setDownloading(true);
+
+  try {
+    const adUrl = "https://www.profitableratecpm.com/b9nc2pwp?key=95fee1e76c98e0993218d26f48f4e33f";
+    const videoUrl = videoData?.data?.[0]?.url;
+
+    // Step 1: Open Ad in new tab
+    const adWindow = window.open(adUrl, "_blank");
+
+    // Step 2: Wait 3 seconds then trigger download
+    setTimeout(() => {
+      if (videoUrl) {
+        const a = document.createElement("a");
+        a.href = videoUrl;
+        a.download = ""; // optional: set filename
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(videoUrl);
+      }
+    }, 3000); // 3-second delay for ad
+
+  } catch (err) {
+    console.error("Download failed:", err.message);
+    setError("⚠️ Download failed. Please check the link.");
+  } finally {
+    setDownloading(false);
+  }
+};
 
   return (
     <div className="app-container">
