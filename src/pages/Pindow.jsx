@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./instadown.css";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
+import { Helmet } from "react-helmet";
 
 function Pindow() {
   const [url, setUrl] = useState("");
@@ -117,7 +118,18 @@ function Pindow() {
 
   return (
     <div className="app-container">
-      
+       <Helmet>
+        <title>Pinterest Video Downloader - Free & Fast</title>
+        <meta
+          name="description"
+          content="Download Pinterest videos and GIFs without watermark. Works on all devices."
+        />
+        <meta
+          name="keywords"
+          content="Pinterest downloader, Pinterest video download, GIF downloader"
+        />
+        <link rel="canonical" href="https://yourdomain.com/pindow" />
+      </Helmet>
 
       <main className="main-content">
         <div className="input-section">

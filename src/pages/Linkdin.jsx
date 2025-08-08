@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./instadown.css";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
+import { Helmet } from "react-helmet";
 
 function Linkdow() {
   const [url, setUrl] = useState("");
@@ -118,7 +119,18 @@ function Linkdow() {
 
   return (
     <div className="app-container">
-      
+       <Helmet>
+        <title>LinkedIn Video Downloader - HD, Fast & Free</title>
+        <meta
+          name="description"
+          content="Download LinkedIn videos easily in HD quality. No signup required."
+        />
+        <meta
+          name="keywords"
+          content="LinkedIn downloader, LinkedIn video download, video saver"
+        />
+        <link rel="canonical" href="https://grabshort.com/linkedow" />
+      </Helmet>
 
       {/* Main Content */}
       <main className="main-content">
