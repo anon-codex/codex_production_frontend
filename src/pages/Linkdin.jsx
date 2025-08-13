@@ -85,68 +85,37 @@ function Linkdow() {
     }
   };
 
-  // const handleDownload = async () => {
-  //   const url = videoData?.url;
-  //   if (!url) return setError("Download link not found");
+  const handleDownload = async () => {
+    const url = videoData?.url;
+    if (!url) return setError("Download link not found");
       
     
-  //   setDownloading(true);
+    setDownloading(true);
 
-  //   try {
-  //     const response = await fetch(url);
-  //     const blob = await response.blob();
-
-  //     // Create temporary blob link
-  //     const blobUrl = window.URL.createObjectURL(blob);
-  //     const a = document.createElement("a");
-  //     a.href = blobUrl;
-  //     a.download = `${Date.now()}_linkedin.mp4`; // Set filename
-  //     document.body.appendChild(a);
-  //     a.click();
-
-  //     // Clean up
-  //     a.remove();
-  //     window.URL.revokeObjectURL(blobUrl);
-  //   } catch (err) {
-  //     console.error("Download failed:", err.message);
-  //     setError("⚠️ Download failed. Please try again.");
-  //   } finally {
-  //     setDownloading(false);
-  //   }
-  // };
-
-  const handleDownload = async () => {
-  const url = videoData?.url;
-  if (!url) return alert("Download link not found");
-
-  setDownloading(true);
-
-  // ✅ Step 1: Create and show Adsterra ad iframe
-  const adWindow = window.open("https://www.profitableratecpm.com/b9nc2pwp?key=95fee1e76c98e0993218d26f48f4e33f", "_blank", "width=600,height=400");
-
-  // ✅ Step 2: Wait for 5 seconds before starting download
-  setTimeout(async () => {
     try {
       const response = await fetch(url);
       const blob = await response.blob();
 
+      // Create temporary blob link
       const blobUrl = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = blobUrl;
-      a.download = `${Date.now()}_linkedin.mp4`;
+      a.download = `${Date.now()}_linkedin.mp4`; // Set filename
       document.body.appendChild(a);
       a.click();
-      a.remove();
 
+      // Clean up
+      a.remove();
       window.URL.revokeObjectURL(blobUrl);
     } catch (err) {
       console.error("Download failed:", err.message);
-      alert("Download failed. Please try again.");
+      setError("⚠️ Download failed. Please try again.");
     } finally {
       setDownloading(false);
     }
-  }, 5000); // wait 5 sec for ad
-};
+  };
+
+
 
   
 

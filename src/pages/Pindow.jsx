@@ -85,70 +85,35 @@ function Pindow() {
     }
   };
 
-  // const handleDownload = async () => {
-  //   const url = videoData?.url;
-  //   if (!url) return alert("Download link not found");
-
-  //   setDownloading(true);
-
-  //   try {
-  //     const response = await fetch(url);
-  //     const blob = await response.blob();
-
-  //     // Create temporary blob link
-  //     const blobUrl = window.URL.createObjectURL(blob);
-  //     const a = document.createElement("a");
-  //     a.href = blobUrl;
-  //     a.download = `${Date.now()}_linkedin.mp4`; // Set filename
-  //     document.body.appendChild(a);
-  //     a.click();
-
-  //     // Clean up
-  //     a.remove();
-  //     window.URL.revokeObjectURL(blobUrl);
-  //   } catch (err) {
-  //     console.error("Download failed:", err.message);
-  //     alert("Download failed. Please try again.");
-  //   } finally {
-  //     setDownloading(false);
-  //   }
-  // };
-
   const handleDownload = async () => {
-  const url = videoData?.url;
-  if (!url) return alert("Download link not found");
+    const url = videoData?.url;
+    if (!url) return alert("Download link not found");
 
-  setDownloading(true);
+    setDownloading(true);
 
-  try {
-    // Step 1: Open ad in new tab
-    const adWindow = window.open("https://www.profitableratecpm.com/b9nc2pwp?key=95fee1e76c98e0993218d26f48f4e33f", "_blank");
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
 
-    // Step 2: Delay for 1.5 seconds before starting download
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Create temporary blob link
+      const blobUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = `${Date.now()}_linkedin.mp4`; // Set filename
+      document.body.appendChild(a);
+      a.click();
 
-    // Step 3: Fetch video
-    const response = await fetch(url);
-    const blob = await response.blob();
+      // Clean up
+      a.remove();
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      console.error("Download failed:", err.message);
+      alert("Download failed. Please try again.");
+    } finally {
+      setDownloading(false);
+    }
+  };
 
-    // Step 4: Create download link
-    const blobUrl = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = blobUrl;
-    a.download = `${Date.now()}_linkedin.mp4`;
-    document.body.appendChild(a);
-    a.click();
-
-    // Step 5: Cleanup
-    a.remove();
-    window.URL.revokeObjectURL(blobUrl);
-  } catch (err) {
-    console.error("Download failed:", err.message);
-    alert("Download failed. Please try again.");
-  } finally {
-    setDownloading(false);
-  }
-};
 
 
   

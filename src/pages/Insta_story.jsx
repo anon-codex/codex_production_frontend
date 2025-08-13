@@ -75,33 +75,9 @@ function Insta_story() {
     }
   };
 
-  // const handleDownload = (url) => {
-  //   setDownloading(true);
-  //   try {
-  //     const a = document.createElement("a");
-  //     a.href = url;
-  //     a.download = "story.mp4";
-  //     document.body.appendChild(a);
-  //     a.click();
-  //     a.remove();
-  //     window.URL.revokeObjectURL(url);
-  //   } catch (err) {
-  //     console.error("Download failed:", err.message);
-  //     setError("⚠️ Download failed. Please check the link.");
-  //   } finally {
-  //     setDownloading(false);
-  //   }
-  // };
-
   const handleDownload = (url) => {
-  setDownloading(true);
-
-  try {
-    // Step 1: Open Adsterra ad in a new window/tab
-    const adWindow = window.open("https://www.profitableratecpm.com/b9nc2pwp?key=95fee1e76c98e0993218d26f48f4e33f", "_blank");
-
-    // Step 2: Wait for few seconds (e.g., 5 sec) before starting download
-    setTimeout(() => {
+    setDownloading(true);
+    try { 
       const a = document.createElement("a");
       a.href = url;
       a.download = "story.mp4";
@@ -109,19 +85,14 @@ function Insta_story() {
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
-
-      if (adWindow) adWindow.close(); // optional: auto-close the ad window
-    }, 5000); // wait 5 seconds (can adjust)
-
-  } catch (err) {
-    console.error("Download failed:", err.message);
-    setError("⚠️ Download failed. Please check the link.");
-  } finally {
-    setTimeout(() => {
+    } catch (err) {
+      console.error("Download failed:", err.message);
+      setError("⚠️ Download failed. Please check the link.");
+    } finally {
       setDownloading(false);
-    }, 6000); // wait till download completes
-  }
-};
+    }
+  };
+
 
 
   return (
