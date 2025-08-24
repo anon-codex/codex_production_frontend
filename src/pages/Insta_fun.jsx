@@ -36,7 +36,7 @@ const Insta_fun = () => {
           end
         >
               <div className='my-flex insta-fun'>
-               <span style={{marginTop:"5px"}}><MdHistoryToggleOff /></span> <span>Story<sup>Beta</sup></span>
+               <span style={{marginTop:"5px"}}><MdHistoryToggleOff /></span> <span>Story</span>
             </div>
           </NavLink>
 
@@ -46,7 +46,7 @@ const Insta_fun = () => {
           end
         >
               <div className='my-flex insta-fun'>
-               <span style={{marginTop:"5px"}}><BsHighlights /></span> <span>Highlights<sup>Beta</sup></span>
+               <span style={{marginTop:"5px"}}><BsHighlights /></span> <span>Highlights</span>
             </div>
            </NavLink>
 
