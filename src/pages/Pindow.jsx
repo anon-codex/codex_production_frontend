@@ -58,14 +58,14 @@ function Pindow() {
       );
 
       if (response.data && response.data.data) {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setVideoData(response.data.data);
       } else {
         setError("⚠️ No video data found. Please check the link.");
       }
     } catch (err) {
       console.error("Error occurred while fetching video:", err);
-        console.log("data error ",err);
+        // console.log("data error ",err);
        
       if (err.response) {
         if (err.response.status === 429) {
