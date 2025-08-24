@@ -58,13 +58,15 @@ function Pindow() {
       );
 
       if (response.data && response.data.data) {
+        console.log(response.data.data);
         setVideoData(response.data.data);
       } else {
         setError("⚠️ No video data found. Please check the link.");
       }
     } catch (err) {
       console.error("Error occurred while fetching video:", err);
-
+        console.log("data error ",err);
+       
       if (err.response) {
         if (err.response.status === 429) {
           setError("🚫 Too many requests. Please wait and try again later.");
@@ -85,34 +87,67 @@ function Pindow() {
     }
   };
 
-  const handleDownload = async () => {
-    const url = videoData?.url;
-    if (!url) return alert("Download link not found");
+ 
+  
+ const handleDownload = async () => {
+  if (!videoData?.url) return alert("Download link not found");
 
-    setDownloading(true);
+  setDownloading(true);
 
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
+  try {
+    const backendUrl = `${apiUrl}/download?url=${encodeURIComponent(videoData.url)}`;
 
-      // Create temporary blob link
-      const blobUrl = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = blobUrl;
-      a.download = `${Date.now()}_linkedin.mp4`; // Set filename
-      document.body.appendChild(a);
-      a.click();
+    const a = document.createElement("a");
+    a.href = backendUrl;
+    a.setAttribute("download", `${Date.now()}_video.mp4`); 
+    document.body.appendChild(a);
 
-      // Clean up
-      a.remove();
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (err) {
-      console.error("Download failed:", err.message);
-      alert("Download failed. Please try again.");
-    } finally {
-      setDownloading(false);
-    }
-  };
+    // Trigger click → download directly hoga
+    a.click();
+    a.remove();
+
+  } catch (err) {
+    console.error("Download failed:", err.message);
+    alert("Download failed. Please try again.");
+  } finally {
+    setDownloading(false);
+  }
+};
+
+
+
+
+
+
+
+  // const handleDownload = async () => {
+  //   const url = videoData?.url;
+  //   if (!url) return alert("Download link not found");
+
+  //   setDownloading(true);
+
+  //   try {
+  //     const response = await fetch(url);
+  //     const blob = await response.blob();
+
+  //     // Create temporary blob link
+  //     const blobUrl = window.URL.createObjectURL(blob);
+  //     const a = document.createElement("a");
+  //     a.href = blobUrl;
+  //     a.download = `${Date.now()}_linkedin.mp4`; // Set filename
+  //     document.body.appendChild(a);
+  //     a.click();
+
+  //     // Clean up
+  //     a.remove();
+  //     window.URL.revokeObjectURL(blobUrl);
+  //   } catch (err) {
+  //     console.error("Download failed:", err.message);
+  //     alert("Download failed. Please try again.");
+  //   } finally {
+  //     setDownloading(false);
+  //   }
+  // };
 
 
 
@@ -130,7 +165,7 @@ function Pindow() {
           name="keywords"
           content="Pinterest downloader, Pinterest video download, GIF downloader"
         />
-        <link rel="canonical" href="https://yourdomain.com/pindow" />
+        <link rel="canonical" href="https://grabshort.online/pindow" />
       </Helmet>
 
       <main className="main-content">
