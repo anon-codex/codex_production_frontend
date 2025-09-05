@@ -4,6 +4,7 @@ import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 import Insta_fun from "./Insta_fun";
 import VideoPreview from "./VideoPreview";
+import { Helmet } from "react-helmet-async";
 
 function Insta_story() {
   const [url, setUrl] = useState("");
@@ -98,6 +99,17 @@ function Insta_story() {
 
   return (
     <div className="app-container">
+      <Helmet>
+        <title>Instagram Highlights Downloader - Save Highlights Online</title>
+        <meta
+          name="description"
+          content="Download Instagram highlights online for free. Save highlights from any public Instagram account in HD quality instantly."
+        />
+        <meta
+          name="keywords"
+          content="Instagram highlights downloader, Insta highlights saver, download Instagram highlights"
+        />
+      </Helmet>
       <main className="main-content">
         <Insta_fun />
 

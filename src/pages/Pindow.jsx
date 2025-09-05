@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./instadown.css";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 function Pindow() {
   const [url, setUrl] = useState("");
@@ -58,14 +58,12 @@ function Pindow() {
       );
 
       if (response.data && response.data.data) {
-        // console.log(response.data.data);
         setVideoData(response.data.data);
       } else {
         setError("⚠️ No video data found. Please check the link.");
       }
     } catch (err) {
       console.error("Error occurred while fetching video:", err);
-        // console.log("data error ",err);
        
       if (err.response) {
         if (err.response.status === 429) {
@@ -155,17 +153,16 @@ function Pindow() {
 
   return (
     <div className="app-container">
-       <Helmet>
-        <title>Pinterest Video Downloader - Free & Fast</title>
+        <Helmet>
+        <title>Pinterest Video Downloader - Save Pinterest Videos Online</title>
         <meta
           name="description"
-          content="Download Pinterest videos and GIFs without watermark. Works on all devices."
+          content="Download Pinterest videos in HD quality online for free. Save Pinterest pins, videos, and GIFs instantly without login."
         />
         <meta
           name="keywords"
-          content="Pinterest downloader, Pinterest video download, GIF downloader"
+          content="Pinterest video downloader, save Pinterest videos, download Pinterest pins"
         />
-        <link rel="canonical" href="https://grabshort.online/pindow" />
       </Helmet>
 
       <main className="main-content">

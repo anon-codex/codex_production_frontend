@@ -3,7 +3,7 @@ import "./instadown.css";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 import Insta_fun from "./Insta_fun";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 function Instadow() {
   const [url, setUrl] = useState("");
@@ -123,18 +123,17 @@ function Instadow() {
 
   return (
     <div className="app-container">
-       <Helmet>
-         <title>Instagram Video Downloader - Free & Fast</title>
+        <Helmet>
+        <title>All-in-One Video Downloader - Instagram, LinkedIn, Pinterest</title>
         <meta
           name="description"
-          content="Download Instagram reels, stories, and videos in HD. No watermark, no login required."
+          content="Download Instagram reels, stories, highlights, LinkedIn and Pinterest videos online for free in HD quality. Fast & secure video downloader tool."
         />
         <meta
           name="keywords"
-          content="Instagram downloader, Instagram reels download, video downloader, free Instagram videos"
+          content="video downloader, Instagram reels saver, LinkedIn video downloader, Pinterest video downloader, free online tool"
         />
-        <link rel="canonical" href="https://grabshort.com/insta" />
-      </Helmet>   
+      </Helmet>
  
       {/* Main Content */}
       <main className="main-content">

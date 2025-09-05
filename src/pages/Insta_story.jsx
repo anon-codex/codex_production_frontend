@@ -4,6 +4,7 @@ import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 import Insta_fun from "./Insta_fun";
 import VideoPreview from "./VideoPreview";
+import { Helmet } from "react-helmet-async";
 
 function Insta_story() {
   const [url, setUrl] = useState("");
@@ -97,6 +98,17 @@ function Insta_story() {
 
   return (
     <div className="app-container">
+       <Helmet>
+        <title>Instagram Story Downloader - Save Stories Online Free</title>
+        <meta
+          name="description"
+          content="Download Instagram stories online in HD quality. Save Instagram stories from any public account instantly without login."
+        />
+        <meta
+          name="keywords"
+          content="Instagram story downloader, Insta story saver, download Instagram stories free"
+        />
+      </Helmet>
       <main className="main-content">
         <Insta_fun />
 

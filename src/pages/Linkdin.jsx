@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./instadown.css";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 function Linkdow() {
   const [url, setUrl] = useState("");
@@ -56,7 +56,6 @@ function Linkdow() {
         }
       );
 
-      console.log("data ", response.data.data.url);
       if (response.data && response.data.data.url) {
         setVideoData(response.data.data);
       } else {
@@ -121,17 +120,16 @@ function Linkdow() {
 
   return (
     <div className="app-container">
-       <Helmet>
-        <title>LinkedIn Video Downloader - HD, Fast & Free</title>
+      <Helmet>
+        <title>LinkedIn Video Downloader - Save LinkedIn Videos Online</title>
         <meta
           name="description"
-          content="Download LinkedIn videos easily in HD quality. No signup required."
+          content="Download LinkedIn videos online for free. Save any LinkedIn post video in HD quality instantly without any login."
         />
         <meta
           name="keywords"
-          content="LinkedIn downloader, LinkedIn video download, video saver"
+          content="LinkedIn video downloader, save LinkedIn videos, LinkedIn HD download free"
         />
-        <link rel="canonical" href="https://grabshort.com/linkedow" />
       </Helmet>
 
       {/* Main Content */}
