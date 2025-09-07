@@ -17,7 +17,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.grabshort.online/pindow</loc>
+    <loc>https://www.grabshort.online/pindow</loc>             
+    <priority>0.8</priority>
+  </url>
+   <url>
+    <loc>https://www.grabshort.online/facedow</loc>             
     <priority>0.8</priority>
   </url>
 </urlset>

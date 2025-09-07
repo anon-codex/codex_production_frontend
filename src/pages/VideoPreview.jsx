@@ -18,7 +18,7 @@ function VideoPreview({ url, onDownload }) {
 
       {isReady ? (
         <button className="download-btn" onClick={() => onDownload(url)}>
-          Download
+          Download Video
         </button>
       ) : (
         <p style={{ color: "#888", marginTop: "1rem" }}>Loading video...</p>

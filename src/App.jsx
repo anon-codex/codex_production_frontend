@@ -2,6 +2,7 @@ import React from 'react'
 import Linkdin from './pages/Linkdin'
 import Instadow from './pages/Instadow'
 import Pindow from './pages/Pindow'
+import Facebook_dow from './pages/Facebook_dow'
 import Footer from './components/Footer'
 import Dmca from './pages/Dmca'
 import PrivacyPolicy from './pages/PrivacyPolicy'
@@ -31,6 +32,7 @@ const App = () => {
 	  {/* <Route path='/insta_profile' element={<Insta_profile />}  /> */}
 	  <Route path='/insta_story' element={<Insta_story />}  />
 	  <Route path='/insta_highlights' element={<Insta_highlights />}  />
+	   <Route path='/facedow' element={<Facebook_dow />}  />
       
 
 

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./instadown.css";
 import axios from "axios";
-const apiUrl = import.meta.env.VITE_API_URL;
 import { Helmet } from "react-helmet-async";
+const apiUrl = import.meta.env.VITE_API_URL;
 
-function Linkdow() {
+function Facebook_dow() {
   const [url, setUrl] = useState("");
   const [videoData, setVideoData] = useState(null);
   const [isLoading, setLoading] = useState(false);
@@ -15,17 +15,23 @@ function Linkdow() {
     if (!url || typeof url !== "string") return false;
 
     const trimmed = url.trim().toLowerCase();
+
+    // ❌ Block if contains XSS payloads or dangerous schemes
     const blackList = ["<", ">", "javascript:", "data:", "onerror=", "onload="];
     for (const bad of blackList) {
       if (trimmed.includes(bad)) return false;
     }
 
+    // ✅ Allow only trusted Facebook video domains
     const allowedPattern =
-      /^(https?:\/\/)(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/|instagram\.com\/reel\/|linkedin\.com\/)/i;
+      /^(https?:\/\/)(www\.)?facebook\.com\/share\/v\/[A-Za-z0-9]+\/?$/i;
     if (!allowedPattern.test(trimmed)) return false;
 
+    // ✅ Use DOM anchor element for safe parsing
     const parser = document.createElement("a");
     parser.href = trimmed;
+
+    // ✅ Only allow http(s)
     if (!["http:", "https:"].includes(parser.protocol)) return false;
 
     return true;
@@ -33,7 +39,7 @@ function Linkdow() {
 
   const handleSearch = async () => {
     if (!url || !validateSafeURL(url)) {
-      setError("❌ Please enter a valid LinkedIn URL.");
+      setError("❌ Please enter a valid Facebook video URL.");
       return;
     }
 
@@ -42,12 +48,11 @@ function Linkdow() {
     setVideoData(null);
 
     const ur = apiUrl;
-
     const video_url = url;
 
     try {
       const response = await axios.post(
-        `${ur}/linkedin`,
+        `${ur}/facedow`,
         { video_url },
         {
           headers: {
@@ -56,14 +61,20 @@ function Linkdow() {
         }
       );
 
-      if (response.data && response.data.data.url) {
-        setVideoData(response.data.data);
+      if (
+        response.data &&
+        response.data.data &&
+        Array.isArray(response.data.data) &&
+        response.data.data.length > 0
+      ) {
+        setVideoData(response.data);
       } else {
         setError("⚠️ No video data found. Please check the link.");
       }
     } catch (err) {
       console.error("Error occurred while fetching video:", err);
 
+      // Smart error detection
       if (err.response) {
         if (err.response.status === 429) {
           setError("🚫 Too many requests. Please wait and try again later.");
@@ -84,72 +95,61 @@ function Linkdow() {
     }
   };
 
-  const handleDownload = async () => {
-    const url = videoData?.url;
-    if (!url) return setError("Download link not found");
-      
-    
+  const handleDownload = () => {
     setDownloading(true);
-
     try {
-      const response = await fetch(url);
-      const blob = await response.blob();
+      const url = videoData?.data?.[0]?.url;
 
-      // Create temporary blob link
-      const blobUrl = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
-      a.href = blobUrl;
-      a.download = `${Date.now()}_linkedin.mp4`; // Set filename
+      a.href = url;
+
       document.body.appendChild(a);
       a.click();
-
-      // Clean up
       a.remove();
-      window.URL.revokeObjectURL(blobUrl);
+      window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error("Download failed:", err.message);
-      setError("⚠️ Download failed. Please try again.");
+      alert("Download failed. Please check the link.");
     } finally {
       setDownloading(false);
     }
   };
 
-
-
-  
-
   return (
     <div className="app-container">
-      <Helmet>
-        <title>LinkedIn Video Downloader - Save LinkedIn Videos Online</title>
-        <meta
-          name="description"
-          content="Download LinkedIn videos online for free. Save any LinkedIn post video in HD quality instantly without any login."
-        />
-        <meta
-          name="keywords"
-          content="LinkedIn video downloader, save LinkedIn videos, LinkedIn HD download free"
-        />
-      </Helmet>
-
+        <Helmet>
+  <title>Facebook Video Downloader - Download HD & SD Facebook Videos Free</title>
+  <meta
+    name="description"
+    content="Free Facebook video downloader online. Download Facebook videos in HD, SD, and audio formats instantly. Works on mobile & desktop without any app."
+  />
+  <meta
+    name="keywords"
+    content="Facebook video downloader, fb downloader, facebook hd video saver, facebook reel downloader, fb video online, save facebook videos, facebook to mp4, download facebook videos hd, facebook video converter"
+  />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="https://www.grabshort.online" />
+  <meta name="language" content="en" />
+</Helmet>
       {/* Main Content */}
       <main className="main-content">
         {/* URL Input Section */}
         <div className="input-section">
-          <h1>LinkedIn Video Downloader</h1>
-          <p>Save your favorite LinkedIn videos in high quality</p>
+          <h1>Facebook Video Downloader</h1>
+          <p>Save your favorite Facebook videos in best quality</p>
           <div className="search-container">
             <input
               type="text"
-              placeholder="Paste LinkedIn video URL here..."
+              placeholder="Paste Facebook Video URL here..."
               value={url}
               onChange={(e) => setUrl(e.target.value)}
             />
+
             <button onClick={handleSearch} disabled={isLoading}>
               {isLoading ? "Searching..." : "Search"}
             </button>
           </div>
-           <span style={{color:"red"}}>{error}</span>
+          <span style={{ color: "red" }}>{error}</span>
         </div>
 
         {/* Fetching Animation */}
@@ -170,11 +170,10 @@ function Linkdow() {
             <div className="video-container">
               <video
                 controls
-                className="video-player"
-                autoPlay
                 muted
-                 style={{
-                  width: "90%",
+                poster={videoData?.data?.[0]?.thumbnail}
+                style={{
+                  width: "60%",
                   maxWidth: "640px",
                   aspectRatio: "9 / 16",
                   borderRadius: "12px",
@@ -183,9 +182,10 @@ function Linkdow() {
                   display: "block",
                 }}
               >
-                <source src={videoData.url} type="video/mp4" />
+                <source src={videoData?.data?.[0]?.url} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
+
               <button className="download-btn" onClick={handleDownload}>
                 Download Video
               </button>
@@ -218,7 +218,7 @@ function Linkdow() {
               <div className="step-content">
                 <h3>Find Video URL</h3>
                 <p>
-                  Open LinkedIn, tap the three-dot menu on the video, and select
+                  Open Facebook, tap the share button on the video, and select
                   "Copy Link"
                 </p>
               </div>
@@ -237,17 +237,14 @@ function Linkdow() {
               <div className="step-number">3</div>
               <div className="step-content">
                 <h3>Download & Save</h3>
-                <p>
-                  Click the download button to save the video to your device
-                </p>
+                <p>Click the download button to save the video to your device</p>
               </div>
             </div>
           </div>
         </div>
       </main>
-
     </div>
   );
 }
 
-export default Linkdow;
+export default Facebook_dow;

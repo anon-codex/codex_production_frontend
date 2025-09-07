@@ -4,6 +4,7 @@ import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 import Insta_fun from "./Insta_fun";
 import VideoPreview from "./VideoPreview";
+import ImagePreview from "./ImagePreview";
 import { Helmet } from "react-helmet-async";
 
 function Insta_story() {
@@ -49,6 +50,7 @@ function Insta_story() {
         { headers: { "Content-Type": "application/json" } }
       );
 
+
       if (
         response.data.data &&
         Array.isArray(response.data.data.data) &&
@@ -65,7 +67,7 @@ function Insta_story() {
       } else if (err.response?.status === 403 || err.response?.status === 401) {
         setError("🔐 Invalid API key or unauthorized access.");
       } else if (err.response?.data?.message) {
-        setError(`❌ ${err.response.data.message}`);
+        setError(`${err.response.data.message}`);
       } else if (err.request) {
         setError("⚠️ No response from server. Check your internet connection.");
       } else {
@@ -146,9 +148,21 @@ function Insta_story() {
         {/* Video Preview */}
         {videoData && !isLoading && (
           <div className="video-preview-section">
-            {videoData.data.map((data, index) => (
-              <VideoPreview key={index} url={data.url} onDownload={handleDownload} />
-            ))}
+            {videoData.data.map((data, index) =>
+      data.type === "video" ? (
+        <VideoPreview 
+          key={index} 
+          url={data.url} 
+          onDownload={handleDownload} 
+        />
+      ) : data.type === "photo" || data.type === "image" ? (
+        <ImagePreview 
+          key={index} 
+          url={data.url} 
+          onDownload={handleDownload} 
+        />
+      ) : null
+    )}
           </div>
         )}
 

@@ -22,7 +22,7 @@
 
 .nav-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .nav-link {
@@ -38,4 +38,23 @@
   background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   color: white;
   transform: translateY(-2px);
+}
+
+.show_hide{
+  display: none;
+}
+
+@media (max-width: 1098px) 
+{ 
+.res-nav{
+  height: 100px;
+  overflow: hidden;
+}
+
+.show_hide{
+  display: block;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
 }

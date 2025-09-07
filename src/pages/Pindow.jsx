@@ -71,7 +71,7 @@ function Pindow() {
         } else if (err.response.status === 403 || err.response.status === 401) {
           setError("🔐 Invalid API key or unauthorized access.");
         } else if (err.response.data && err.response.data.message) {
-          setError(`❌ ${err.response.data.message}`);
+          setError(`${err.response.data.message}`);
         } else {
           setError("❌ Server error occurred. Please try again.");
         }

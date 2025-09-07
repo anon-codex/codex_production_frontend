@@ -84,7 +84,7 @@ function Instadow() {
         } else if (err.response.status === 403 || err.response.status === 401) {
           setError("🔐 Invalid API key or unauthorized access.");
         } else if (err.response.data && err.response.data.message) {
-          setError(`❌ ${err.response.data.message}`);
+          setError(`${err.response.data.message}`);
         } else {
           setError("❌ Server error occurred. Please try again.");
         }
@@ -123,17 +123,21 @@ function Instadow() {
 
   return (
     <div className="app-container">
-        <Helmet>
-        <title>All-in-One Video Downloader - Instagram, LinkedIn, Pinterest</title>
-        <meta
-          name="description"
-          content="Download Instagram reels, stories, highlights, LinkedIn and Pinterest videos online for free in HD quality. Fast & secure video downloader tool."
-        />
-        <meta
-          name="keywords"
-          content="video downloader, Instagram reels saver, LinkedIn video downloader, Pinterest video downloader, free online tool"
-        />
-      </Helmet>
+       <Helmet>
+  <title>All-in-One Video Downloader - Instagram, LinkedIn, Pinterest HD Saver</title>
+  <meta
+    name="description"
+    content="Free all-in-one video downloader to save Instagram reels, stories, highlights, LinkedIn videos, and Pinterest videos in HD quality online. Fast, secure, and works on all devices."
+  />
+  <meta
+    name="keywords"
+    content="all-in-one video downloader, Instagram reel downloader, Instagram story saver, Instagram highlights downloader, LinkedIn video downloader, Pinterest video downloader, download videos online, free video saver, social media video downloader, HD video downloader tool"
+  />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="https://www.grabshort.online" />
+  <meta name="language" content="en" />
+</Helmet>
+
  
       {/* Main Content */}
       <main className="main-content">

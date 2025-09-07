@@ -397,3 +397,48 @@ body {
   padding: 20px;
 }
 
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.image-player {
+  width: 70%;
+  max-width: 300px;
+  aspect-ratio: 9 / 16;  /* same ratio like video */
+  object-fit: cover;     /* crop nicely instead of stretching */
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Common style (mobile first) */
+.video-player,
+.image-player {
+  width: 100%;
+  max-width: 300px;     /* mobile ke liye */
+  aspect-ratio: 9 / 16;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+  object-fit: cover;
+  background: #000;
+}
+
+/* Tablet (>=768px) */
+@media (min-width: 768px) {
+  .video-player,
+  .image-player {
+    max-width: 300px;
+  }
+}
+
+/* Desktop (>=1024px) */
+@media (min-width: 1024px) {
+  .video-player,
+  .image-player {
+    max-width: 300px;
+  }
+}
