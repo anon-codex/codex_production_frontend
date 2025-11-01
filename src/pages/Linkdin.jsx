@@ -3,6 +3,7 @@ import "./instadown.css";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 import { Helmet } from "react-helmet-async";
+import Lseo from "./Lseo";
 
 function Linkdow() {
   const [url, setUrl] = useState("");
@@ -146,7 +147,7 @@ function Linkdow() {
               onChange={(e) => setUrl(e.target.value)}
             />
             <button onClick={handleSearch} disabled={isLoading}>
-              {isLoading ? "Searching..." : "Search"}
+              {isLoading ? "Searching..." : "Download"}
             </button>
           </div>
            <span style={{color:"red"}}>{error}</span>
@@ -169,6 +170,8 @@ function Linkdow() {
           <div className="video-preview-section">
             <div className="video-container">
               <video
+                id="video_dis_cont"
+                controlsList="nodownload noremoteplayback"
                 controls
                 className="video-player"
                 autoPlay
@@ -210,7 +213,7 @@ function Linkdow() {
         </div>
 
         {/* How to Download Steps */}
-        <div className="steps-section">
+        {/* <div className="steps-section">
           <h2>How to Download</h2>
           <div className="steps-container">
             <div className="step-card">
@@ -243,7 +246,8 @@ function Linkdow() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <Lseo />
       </main>
 
     </div>

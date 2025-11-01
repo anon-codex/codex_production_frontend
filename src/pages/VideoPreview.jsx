@@ -7,10 +7,13 @@ function VideoPreview({ url, onDownload }) {
     <div className="video-container">
       <video
         className="video-player"
+        id="video_dis_cont"
+        controlsList="nodownload noremoteplayback"
         controls
         muted
         preload="auto"
         onLoadedData={() => setIsReady(true)}
+        onContextMenu={(e) => e.preventDefault()} // 🔒 disable right-click / 3 dots
       >
         <source src={url} type="video/mp4" />
         Your browser does not support the video tag.

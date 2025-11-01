@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./instadown.css";
 import axios from "axios";
-const apiUrl = import.meta.env.VITE_API_URL;
 import Insta_fun from "./Insta_fun";
 import { Helmet } from "react-helmet-async";
+import Seo from "./Seo";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function Instadow() {
   const [url, setUrl] = useState("");
@@ -12,27 +14,39 @@ function Instadow() {
   const [error, setError] = useState("");
   const [downloading, setDownloading] = useState(false);
 
+  useEffect(() => {
+    async function warmUp() {
+      const video_url =
+        "https://www.instagram.com/reel/DLrsVh4yxr7/?utm_source=ig_web_copy_link";
+      try {
+        const response = await axios.post(
+          `${apiUrl}/insta`,
+          { video_url },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        console.log("Warm-up success:", response.data);
+      } catch (error) {
+        console.log("Warm-up error:", error);
+      }
+    }
+    warmUp();
+  }, []);
+
   function validateSafeURL(url) {
     if (!url || typeof url !== "string") return false;
-
     const trimmed = url.trim().toLowerCase();
-
-    // ❌ Block if contains XSS payloads or dangerous schemes
     const blackList = ["<", ">", "javascript:", "data:", "onerror=", "onload="];
     for (const bad of blackList) {
       if (trimmed.includes(bad)) return false;
     }
-
-    // ✅ Allow only trusted video domains
     const allowedPattern =
       /^(https?:\/\/)(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/|instagram\.com\/reel\/|linkedin\.com\/)/i;
     if (!allowedPattern.test(trimmed)) return false;
 
-    // ✅ Use DOM anchor element for safe parsing
     const parser = document.createElement("a");
     parser.href = trimmed;
-
-    // ✅ Only allow http(s)
     if (!["http:", "https:"].includes(parser.protocol)) return false;
 
     return true;
@@ -43,47 +57,29 @@ function Instadow() {
       setError("❌ Please enter a valid Instagram URL.");
       return;
     }
-
     setLoading(true);
     setError("");
     setVideoData(null);
-
-    const ur = apiUrl;
-
-    const video_url = url;
-
     try {
       const response = await axios.post(
-        `${ur}/insta`,
-        { video_url },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        `${apiUrl}/insta`,
+        { video_url: url },
+        { headers: { "Content-Type": "application/json" } }
       );
 
-      
-      if (
-        response.data &&
-        response.data.data &&
-        Array.isArray(response.data.data) &&
-        response.data.data.length > 0
-      ) {
+      if (response.data?.data?.length > 0) {
         setVideoData(response.data);
       } else {
         setError("⚠️ No video data found. Please check the link.");
       }
     } catch (err) {
       console.error("Error occurred while fetching video:", err);
-
-      // Smart error detection
       if (err.response) {
         if (err.response.status === 429) {
           setError("🚫 Too many requests. Please wait and try again later.");
         } else if (err.response.status === 403 || err.response.status === 401) {
           setError("🔐 Invalid API key or unauthorized access.");
-        } else if (err.response.data && err.response.data.message) {
+        } else if (err.response.data?.message) {
           setError(`${err.response.data.message}`);
         } else {
           setError("❌ Server error occurred. Please try again.");
@@ -99,14 +95,11 @@ function Instadow() {
   };
 
   const handleDownload = () => {
-  
     setDownloading(true);
     try {
       const url = videoData?.data?.[0]?.url;
-
       const a = document.createElement("a");
       a.href = url;
-     
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -119,35 +112,45 @@ function Instadow() {
     }
   };
 
-
-
   return (
     <div className="app-container">
-       <Helmet>
-  <title>All-in-One Video Downloader - Instagram, LinkedIn, Pinterest HD Saver</title>
-  <meta
-    name="description"
-    content="Free all-in-one video downloader to save Instagram reels, stories, highlights, LinkedIn videos, and Pinterest videos in HD quality online. Fast, secure, and works on all devices."
-  />
-  <meta
-    name="keywords"
-    content="all-in-one video downloader, Instagram reel downloader, Instagram story saver, Instagram highlights downloader, LinkedIn video downloader, Pinterest video downloader, download videos online, free video saver, social media video downloader, HD video downloader tool"
-  />
-  <meta name="robots" content="index, follow" />
-  <meta name="author" content="https://www.grabshort.online" />
-  <meta name="language" content="en" />
-</Helmet>
+      {/* ✅ SEO Optimized Meta Tags */}
+      <Helmet>
+        <title>
+          Instagram Reels & Pinterest Video Downloader | Free HD Online Tool
+        </title>
+        <meta
+          name="description"
+          content="Download Instagram Reels, Stories, Highlights, and Pinterest videos in HD quality. 100% free, no login required, and works on all devices."
+        />
+        <meta
+          name="keywords"
+          content="Instagram Reels downloader, Instagram story saver, Pinterest video downloader, Download Instagram Reels online, Download Pinterest videos HD, Free Instagram downloader, Save Reels online, All-in-one social media downloader"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="https://www.grabshort.online" />
+        <meta
+          property="og:title"
+          content="Instagram & Pinterest Video Downloader"
+        />
+        <meta
+          property="og:description"
+          content="Easily download Instagram Reels, Stories, and Pinterest videos online in HD for free. No login required!"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.grabshort.online" />
+        <meta
+          property="og:image"
+          content="https://www.grabshort.online/logo.png"
+        />
+      </Helmet>
 
- 
-      {/* Main Content */}
       <main className="main-content">
-        
-          <Insta_fun />
+        <Insta_fun />
 
-
-        {/* URL Input Section */}
+        {/* Input Section */}
         <div className="input-section">
-          <h1>Instagram Reels Downloader</h1>
+          <h1 style={{color:"orange"}}>Instagram Reels Downloader</h1>
           <p>Save your favorite Instagram Reels in high quality</p>
           <div className="search-container">
             <input
@@ -156,15 +159,14 @@ function Instadow() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
             />
-
             <button onClick={handleSearch} disabled={isLoading}>
-              {isLoading ? "Searching..." : "Search"}
+              {isLoading ? "Searching..." : "Download"}
             </button>
           </div>
           <span style={{ color: "red" }}>{error}</span>
         </div>
 
-        {/* Fetching Animation */}
+        {/* Loader */}
         {isLoading && (
           <div className="loading-container">
             <div className="loading-animation">
@@ -176,17 +178,19 @@ function Instadow() {
           </div>
         )}
 
-        {/* Video Preview and Download */}
+        {/* Video Display */}
         {videoData && !isLoading && (
           <div className="video-preview-section">
             <div className="video-container">
+              <span style={{ fontSize: "140%" }}>Search Result</span>
               <video
+                id="video_diss_cont"
                 controls
                 autoPlay
                 muted
+                controlsList="nodownload noremoteplayback"
                 style={{
-                  width: "90%",
-                  maxWidth: "640px",
+                  // maxWidth: "37%",
                   aspectRatio: "9 / 16",
                   borderRadius: "12px",
                   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
@@ -197,7 +201,6 @@ function Instadow() {
                 <source src={videoData?.data?.[0]?.url} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
-
               <button className="download-btn" onClick={handleDownload}>
                 Download Reel
               </button>
@@ -205,7 +208,7 @@ function Instadow() {
           </div>
         )}
 
-        {/* Secure/Fast/No Login Info Strip */}
+        {/* Info Strip */}
         <div className="info-strip">
           <div className="info-card">
             <span className="info-icon">🔒</span>
@@ -221,8 +224,8 @@ function Instadow() {
           </div>
         </div>
 
-        {/* How to Download Steps */}
-        <div className="steps-section">
+        {/* Steps */}
+        {/* <div className="steps-section">
           <h2>How to Download</h2>
           <div className="steps-container">
             <div className="step-card">
@@ -230,8 +233,7 @@ function Instadow() {
               <div className="step-content">
                 <h3>Find Reel URL</h3>
                 <p>
-                  Open Instagram, tap the share button on the reel, and select
-                  "Copy Link"
+                  Open Instagram, tap the share button, and copy the Reel link.
                 </p>
               </div>
             </div>
@@ -240,8 +242,7 @@ function Instadow() {
               <div className="step-content">
                 <h3>Paste URL</h3>
                 <p>
-                  Paste the copied link into the search bar above and click
-                  "Search"
+                  Paste the link above and click “Search” to fetch the video.
                 </p>
               </div>
             </div>
@@ -249,11 +250,18 @@ function Instadow() {
               <div className="step-number">3</div>
               <div className="step-content">
                 <h3>Download & Save</h3>
-                <p>Click the download button to save the reel to your device</p>
+                <p>
+                  Click “Download” to save the Reel or Pinterest video in HD.
+                </p>
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+
+        {/* ✅ SEO Blog Section (Styled with your gradient colors) */}
+      < Seo />
+       
+      
       </main>
     </div>
   );

@@ -3,6 +3,7 @@ import "./instadown.css";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 import { Helmet } from "react-helmet-async";
+import Pseo from "./Pseo";
 
 function Pindow() {
   const [url, setUrl] = useState("");
@@ -64,7 +65,7 @@ function Pindow() {
       }
     } catch (err) {
       console.error("Error occurred while fetching video:", err);
-       
+
       if (err.response) {
         if (err.response.status === 429) {
           setError("🚫 Too many requests. Please wait and try again later.");
@@ -85,38 +86,31 @@ function Pindow() {
     }
   };
 
- 
-  
- const handleDownload = async () => {
-  if (!videoData?.url) return alert("Download link not found");
+  const handleDownload = async () => {
+    if (!videoData?.url) return alert("Download link not found");
 
-  setDownloading(true);
+    setDownloading(true);
 
-  try {
-    const backendUrl = `${apiUrl}/download?url=${encodeURIComponent(videoData.url)}`;
+    try {
+      const backendUrl = `${apiUrl}/download?url=${encodeURIComponent(
+        videoData.url
+      )}`;
 
-    const a = document.createElement("a");
-    a.href = backendUrl;
-    a.setAttribute("download", `${Date.now()}_video.mp4`); 
-    document.body.appendChild(a);
+      const a = document.createElement("a");
+      a.href = backendUrl;
+      a.setAttribute("download", `${Date.now()}_video.mp4`);
+      document.body.appendChild(a);
 
-    // Trigger click → download directly hoga
-    a.click();
-    a.remove();
-
-  } catch (err) {
-    console.error("Download failed:", err.message);
-    alert("Download failed. Please try again.");
-  } finally {
-    setDownloading(false);
-  }
-};
-
-
-
-
-
-
+      // Trigger click → download directly hoga
+      a.click();
+      a.remove();
+    } catch (err) {
+      console.error("Download failed:", err.message);
+      alert("Download failed. Please try again.");
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   // const handleDownload = async () => {
   //   const url = videoData?.url;
@@ -147,13 +141,9 @@ function Pindow() {
   //   }
   // };
 
-
-
-  
-
   return (
     <div className="app-container">
-        <Helmet>
+      <Helmet>
         <title>Pinterest Video Downloader - Save Pinterest Videos Online</title>
         <meta
           name="description"
@@ -177,10 +167,10 @@ function Pindow() {
               onChange={(e) => setUrl(e.target.value)}
             />
             <button onClick={handleSearch} disabled={isLoading}>
-              {isLoading ? "Searching..." : "Search"}
+              {isLoading ? "Searching..." : "Download"}
             </button>
           </div>
-           <span style={{color:"red"}}>{error}</span>
+          <span style={{ color: "red" }}>{error}</span>
         </div>
 
         {isLoading && (
@@ -198,13 +188,13 @@ function Pindow() {
           <div className="video-preview-section">
             <div className="video-container">
               <video
+                id="video_diss_cont"
+                controlsList="nodownload noremoteplayback"
                 controls
-                className="video-player"
+                // className="video-player"
                 autoPlay
                 muted
-                 style={{
-                  width: "90%",
-                  maxWidth: "640px",
+                style={{
                   aspectRatio: "9 / 16",
                   borderRadius: "12px",
                   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
@@ -238,7 +228,7 @@ function Pindow() {
           </div>
         </div>
 
-        <div className="steps-section">
+        {/* <div className="steps-section">
           <h2>How to Download</h2>
           <div className="steps-container">
             <div className="step-card">
@@ -271,9 +261,9 @@ function Pindow() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <Pseo />
       </main>
-
     </div>
   );
 }

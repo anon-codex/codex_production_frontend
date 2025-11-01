@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./instadown.css";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
+import Fseo from "./Fseo";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function Facebook_dow() {
@@ -117,20 +118,22 @@ function Facebook_dow() {
 
   return (
     <div className="app-container">
-        <Helmet>
-  <title>Facebook Video Downloader - Download HD & SD Facebook Videos Free</title>
-  <meta
-    name="description"
-    content="Free Facebook video downloader online. Download Facebook videos in HD, SD, and audio formats instantly. Works on mobile & desktop without any app."
-  />
-  <meta
-    name="keywords"
-    content="Facebook video downloader, fb downloader, facebook hd video saver, facebook reel downloader, fb video online, save facebook videos, facebook to mp4, download facebook videos hd, facebook video converter"
-  />
-  <meta name="robots" content="index, follow" />
-  <meta name="author" content="https://www.grabshort.online" />
-  <meta name="language" content="en" />
-</Helmet>
+      <Helmet>
+        <title>
+          Facebook Video Downloader - Download HD & SD Facebook Videos Free
+        </title>
+        <meta
+          name="description"
+          content="Free Facebook video downloader online. Download Facebook videos in HD, SD, and audio formats instantly. Works on mobile & desktop without any app."
+        />
+        <meta
+          name="keywords"
+          content="Facebook video downloader, fb downloader, facebook hd video saver, facebook reel downloader, fb video online, save facebook videos, facebook to mp4, download facebook videos hd, facebook video converter"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="https://www.grabshort.online" />
+        <meta name="language" content="en" />
+      </Helmet>
       {/* Main Content */}
       <main className="main-content">
         {/* URL Input Section */}
@@ -146,7 +149,7 @@ function Facebook_dow() {
             />
 
             <button onClick={handleSearch} disabled={isLoading}>
-              {isLoading ? "Searching..." : "Search"}
+              {isLoading ? "Searching..." : "Download"}
             </button>
           </div>
           <span style={{ color: "red" }}>{error}</span>
@@ -169,11 +172,13 @@ function Facebook_dow() {
           <div className="video-preview-section">
             <div className="video-container">
               <video
+                id="video_dis_cont"
+                controlsList="nodownload noremoteplayback"
                 controls
                 muted
                 poster={videoData?.data?.[0]?.thumbnail}
                 style={{
-                  width: "60%",
+                  width: "55%",
                   maxWidth: "640px",
                   aspectRatio: "9 / 16",
                   borderRadius: "12px",
@@ -210,7 +215,7 @@ function Facebook_dow() {
         </div>
 
         {/* How to Download Steps */}
-        <div className="steps-section">
+        {/* <div className="steps-section">
           <h2>How to Download</h2>
           <div className="steps-container">
             <div className="step-card">
@@ -237,11 +242,14 @@ function Facebook_dow() {
               <div className="step-number">3</div>
               <div className="step-content">
                 <h3>Download & Save</h3>
-                <p>Click the download button to save the video to your device</p>
+                <p>
+                  Click the download button to save the video to your device
+                </p>
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <Fseo />
       </main>
     </div>
   );

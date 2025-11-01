@@ -5,6 +5,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 import Insta_fun from "./Insta_fun";
 import VideoPreview from "./VideoPreview";
 import ImagePreview from "./ImagePreview";
+import Seo from "./Seo";
 import { Helmet } from "react-helmet-async";
 
 function Insta_story() {
@@ -127,7 +128,7 @@ function Insta_story() {
               onChange={(e) => setUrl(e.target.value)}
             />
             <button onClick={handleSearch} disabled={isLoading}>
-              {isLoading ? "Searching..." : "Search"}
+              {isLoading ? "Searching..." : "Download"}
             </button>
           </div>
           <span style={{ color: "red" }}>{error}</span>
@@ -183,7 +184,7 @@ function Insta_story() {
         </div>
 
         {/* Steps Section */}
-        <div className="steps-section">
+        {/* <div className="steps-section">
           <h2>How to Download</h2>
           <div className="steps-container">
             <div className="step-card">
@@ -208,7 +209,9 @@ function Insta_story() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+
+        <Seo />
       </main>
     </div>
   );
