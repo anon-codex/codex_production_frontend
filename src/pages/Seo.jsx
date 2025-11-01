@@ -294,7 +294,7 @@ const Seo = () => {
           borderRadius: "15px",
           border: "1px solid rgba(255,255,255,0.2)"
         }}>
-          <h4 style={{ color: "#03ee0bff", marginBottom: "0.5rem" }}>Q: {faq.q}</h4>
+          <h4 style={{ color: "#4caf50", marginBottom: "0.5rem" }}>Q: {faq.q}</h4>
           <p style={{ margin: 0, lineHeight: "1.6" }}>A: {faq.a}</p>
         </div>
       ))}
