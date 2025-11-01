@@ -357,7 +357,7 @@ const Pseo = () => {
       Join thousands of creatives who trust GrabShort for their inspiration and creative content needs!
     </p>
     <a 
-      href="https://www.grabshort.online"
+      href="https://www.grabshort.online/pindow"
       style={{
         background: "linear-gradient(45deg, #e60023, #bd081c)",
         color: "white",

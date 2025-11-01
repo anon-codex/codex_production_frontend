@@ -186,7 +186,6 @@ function Instadow() {
               <video
                 id="video_diss_cont"
                 controls
-                autoPlay
                 muted
                 controlsList="nodownload noremoteplayback"
                 style={{

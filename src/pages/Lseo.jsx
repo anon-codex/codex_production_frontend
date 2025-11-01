@@ -356,7 +356,7 @@ const Lseo = () => {
       Join thousands of professionals who trust GrabShort for their educational and business content needs!
     </p>
     <a 
-      href="https://www.grabshort.online"
+      href="https://www.grabshort.online/linkedow"
       style={{
         background: "linear-gradient(45deg, #0077b5, #00a0dc)",
         color: "white",
