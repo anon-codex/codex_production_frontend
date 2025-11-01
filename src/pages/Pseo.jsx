@@ -54,7 +54,7 @@ const Pseo = () => {
       zIndex: "2"
     }}
   >
-    Looking for the <strong style={{ color: "#ffeb3b", fontSize: "1.3rem" }}>best Pinterest video downloader</strong>? 
+    Looking for the <strong style={{ color: "#afb10eee", fontSize: "1.3rem" }}>best Pinterest video downloader</strong>? 
     GrabShort lets you <strong style={{ color: "#4caf50" }}>download Pinterest videos, ideas, and creative content</strong> 
     in <strong style={{ color: "#00bcd4" }}>high-definition quality</strong> for your inspiration board!
   </p>

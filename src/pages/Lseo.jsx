@@ -54,7 +54,7 @@ const Lseo = () => {
       zIndex: "2"
     }}
   >
-    Looking for the <strong style={{ color: "#ffeb3b", fontSize: "1.3rem" }}>best LinkedIn video downloader</strong>? 
+    Looking for the <strong style={{ color: "#afb10eee", fontSize: "1.3rem" }}>best LinkedIn video downloader</strong>? 
     GrabShort lets you <strong style={{ color: "#4caf50" }}>download LinkedIn videos, training content, and professional posts</strong> 
     in <strong style={{ color: "#00bcd4" }}>high-definition quality</strong> for offline learning!
   </p>

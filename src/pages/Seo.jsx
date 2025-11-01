@@ -56,7 +56,7 @@ const Seo = () => {
       zIndex: "2"
     }}
   >
-    Looking for the <strong style={{ color: "#ffeb3b", fontSize: "1.3rem" }}>best Instagram video downloader</strong>? 
+    Looking for the <strong style={{ color: "#afb10eee", fontSize: "1.3rem" }}>best Instagram video downloader</strong>? 
     GrabShort lets you <strong style={{ color: "#4caf50" }}>download Instagram Reels, Stories, Highlights, videos</strong> 
     in <strong style={{ color: "#00bcd4" }}>high-definition quality</strong> without any watermark!
   </p>
